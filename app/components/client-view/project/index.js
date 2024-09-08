@@ -62,6 +62,9 @@ export default function ClientProjectView({ data }) {
                                                 <h3 className="text-3xl text-black-600 capitalize font-extrabold">
                                                     {item.name}
                                                 </h3>
+                                                <p className="text-xl mt-2 text-red-500 capitalize font-bold">
+                                                    {item.projectName}
+                                                </p>
                                                 <p className="text-sm mt-2 text-black-500 capitalize font-bold">
                                                     {item.createdAt ? item.createdAt.split("T")[0] : "Date not available"}
                                                 </p>
