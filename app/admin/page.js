@@ -241,7 +241,6 @@ const AdminView = () => {
                             </React.Fragment>
                         ))
                 }
-
             </div>
         </>
     )

@@ -5,8 +5,9 @@ import ClientContactView from "./components/client-view/contact"
 import ClientExperienceAndEducationView from "./components/client-view/experience-education"
 import ClientHomeView from "./components/client-view/home"
 import ClientProjectView from "./components/client-view/project"
+require('dotenv').config();
 
-const HOST = 'http://localhost:3000'
+const HOST = process.env.HOST_URL
 async function extractAllDatas(currentSection) {
   const res = await fetch(`${HOST}/api/${currentSection}/get`, {
     method: 'GET',
