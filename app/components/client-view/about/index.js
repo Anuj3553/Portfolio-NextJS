@@ -67,7 +67,7 @@ export default function ClientAboutView({ data }) {
                                         : "sm:justify-end"
                                 } py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0
                 `}
-                            key={`${index}-${infoItem.label}`}
+                            key={index}
                             custom={{ duration: 2 + index }}
                             variants={setVariants}
                         >

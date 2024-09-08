@@ -37,7 +37,7 @@ export default function AdminProjectView({ formData, setFormData, handleSaveData
                     {
                         data && data.length ?
                             data.map((item, index) => (
-                                <div key={`${index}-${item.id}`} className="flex flex-col gap-4 border p-4 border-gray-600">
+                                <div key={index} className="flex flex-col gap-4 border p-4 border-gray-600">
                                     <p>{item.projectName}</p>
                                     <p>{item.technologies}</p>
                                     <p>{item.website}</p>

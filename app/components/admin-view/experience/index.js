@@ -41,8 +41,8 @@ export default function AdminExperienceView({ formData, setFormData, handleSaveD
             <div className="mb-10">
                 {
                     data && data.length ?
-                        data.map((item) => (
-                            <div key={item.id} className="flex flex-col gap-4 border p-4 border-gray-600">
+                        data.map((item, index) => (
+                            <div key={index} className="flex flex-col gap-4 border p-4 border-gray-600">
                                 <p>{item.position}</p>
                                 <p>{item.company}</p>
                                 <p>{item.duration}</p>

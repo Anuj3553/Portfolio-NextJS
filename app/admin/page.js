@@ -73,32 +73,32 @@ const AdminView = () => {
         {
             id: 'home',
             label: 'Home',
-            commponent: <AdminHomeView formData={homeViewFormData} handleSaveData={handleSaveData} setFormData={setHomeViewFormData} />
+            component: <AdminHomeView formData={homeViewFormData} handleSaveData={handleSaveData} setFormData={setHomeViewFormData} />
         },
         {
             id: 'about',
             label: 'About',
-            commponent: <AdminAboutView formData={aboutViewFormData} handleSaveData={handleSaveData} setFormData={setAboutViewFormData} />
+            component: <AdminAboutView formData={aboutViewFormData} handleSaveData={handleSaveData} setFormData={setAboutViewFormData} />
         },
         {
             id: 'experience',
             label: 'Experience',
-            commponent: <AdminExperienceView formData={experienceViewFormData} handleSaveData={handleSaveData} setFormData={setExperienceViewFormData} data={allData?.experience} />
+            component: <AdminExperienceView formData={experienceViewFormData} handleSaveData={handleSaveData} setFormData={setExperienceViewFormData} data={allData?.experience} />
         },
         {
             id: 'education',
             label: 'Education',
-            commponent: <AdminEducationView formData={educationViewFormData} handleSaveData={handleSaveData} setFormData={setEducationViewFormData} data={allData?.education} />
+            component: <AdminEducationView formData={educationViewFormData} handleSaveData={handleSaveData} setFormData={setEducationViewFormData} data={allData?.education} />
         },
         {
             id: 'project',
             label: 'Project',
-            commponent: <AdminProjectView formData={projectViewFormData} handleSaveData={handleSaveData} setFormData={setProjectViewFormData} data={allData?.project} />
+            component: <AdminProjectView formData={projectViewFormData} handleSaveData={handleSaveData} setFormData={setProjectViewFormData} data={allData?.project} />
         },
         {
             id: 'contact',
             label: 'Contact',
-            commponent: <AdminContactView data={allData && allData?.contact} />
+            component: <AdminContactView data={allData && allData?.contact} />
         }
     ]
 
@@ -189,7 +189,7 @@ const AdminView = () => {
                             {
                                 menuItems.map((item, index) => (
                                     <button
-                                        key={`${index}-${item.id}`}
+                                        key={index}
                                         type='button'
                                         onClick={() => { setCurrentSelectedTab(item.id); resetFormDatas(); setUpdate(false) }}
                                         className='p-4 font-bold text-xl text-black hover:text-red-500'
@@ -212,7 +212,7 @@ const AdminView = () => {
                             {
                                 menuItems.map((item, index) => (
                                     <button
-                                        key={`${item.id}-${index}`}
+                                        key={index}
                                         type='button'
                                         onClick={() => { setCurrentSelectedTab(item.id); setIsNavbarOpen(false); resetFormDatas(); setUpdate(false) }}
                                         className='block w-full p-4 font-bold text-3xl text-white'
@@ -233,8 +233,15 @@ const AdminView = () => {
             </div>
             <div className='mt-10 p-10'>
                 {
-                    menuItems.map(item => item.id === currentSelectedTab && item.commponent)
+                    menuItems
+                        .filter(item => item.id === currentSelectedTab)
+                        .map((item, index) => (
+                            <React.Fragment key={index}>
+                                {item.component}
+                            </React.Fragment>
+                        ))
                 }
+
             </div>
         </>
     )

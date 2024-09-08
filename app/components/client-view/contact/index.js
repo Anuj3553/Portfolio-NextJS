@@ -37,22 +37,22 @@ export default function ClientContactView() {
 
   async function handleSendMessage() {
     const res = await addData("contact", formData);
-    console.log(res,'contact-res');
+    console.log(res, 'contact-res');
 
-    if(res && res.success) {
-        setFormData(initialFormData)
-        setShowSuccessMessage(true)
+    if (res && res.success) {
+      setFormData(initialFormData)
+      setShowSuccessMessage(true)
     }
   }
 
-  useEffect(()=>{
-    if(showSuccessMessage) {
-        setTimeout(()=>{
-           setShowSuccessMessage(false)
-        },1500)
+  useEffect(() => {
+    if (showSuccessMessage) {
+      setTimeout(() => {
+        setShowSuccessMessage(false)
+      }, 1500)
     }
 
-  },[showSuccessMessage])
+  }, [showSuccessMessage])
 
   const isValidForm = () => {
     return formData &&
@@ -74,7 +74,7 @@ export default function ClientContactView() {
         <div className="flex flex-col justify-center items-center row-start-2 sm:row-start-1">
           <h1 className="leading-[70px] mb-4 text-3xl lg:text-4xl xl:text-5xl font-medium">
             {"Contact Me".split(" ").map((item, index) => (
-              <span
+              <span key={index}
                 className={`${index === 1 ? "text-red-main" : "text-[#000]"}`}
               >
                 {item}{" "}
@@ -87,9 +87,9 @@ export default function ClientContactView() {
         <div className="container px-5">
           <div className="w-full">
             <div className="flex flex-wrap -m-2">
-              {controls.map((controlItem) =>
+              {controls.map((controlItem, index) =>
                 controlItem.name === "message" ? (
-                  <div className="p-2 w-full">
+                  <div key={index} className="p-2 w-full">
                     <div className="relative">
                       <label className="text-sm text-[#000]">
                         {controlItem.label}
@@ -109,7 +109,7 @@ export default function ClientContactView() {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-2 w-full">
+                  <div className="p-2 w-full" key={index}>
                     <div className="relative">
                       <label className="text-sm text-[#000]">
                         {controlItem.label}
@@ -135,7 +135,7 @@ export default function ClientContactView() {
               }
               <div className="p-2 w-full sm:flex sm:justify-center sm:items-center">
                 <button
-                disabled={!isValidForm()}
+                  disabled={!isValidForm()}
                   onClick={handleSendMessage}
                   className="disabled:opacity-50 py-3 sm:my-24 md:my-0 lg:py-4 px-12 lg:px-16 text-white-500 font-semibold rounded-lg text-2xl tracking-widest bg-red-main outline-none"
                 >

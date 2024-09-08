@@ -106,7 +106,7 @@ export default function ClientHomeView({ data }) {
                 ? data[0]?.heading
                   .split(" ")
                   .map((item, index) => (
-                    <span
+                    <span key={index}
                       className={`${index === 2 || index === 3
                         ? "text-red-main"
                         : "text-[#000]"
@@ -123,7 +123,7 @@ export default function ClientHomeView({ data }) {
             <motion.div className="flex gap-3 cursor-pointer">
               {socialIcons.map((item, index) => (
                 <motion.a
-                  key={`${index}-${item.id}`}
+                  key={index}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
