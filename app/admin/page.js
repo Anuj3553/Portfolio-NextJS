@@ -7,11 +7,17 @@ import AdminExperienceView from '../components/admin-view/experience'
 import AdminEducationView from '../components/admin-view/education'
 import AdminProjectView from '../components/admin-view/project'
 import AdminContactView from '../components/admin-view/contact'
-import { addData, getData, updateData } from '../services'
+import { addData, getData, login, updateData } from '../services'
+import Login from '../components/admin-view/login'
 
 const initialHomeFormData = {
     heading: '',
-    summary: ''
+    summary: '',
+    facebook: '',
+    twitter: '',
+    linkedin: '',
+    instagram: '',
+    github: ''
 }
 
 const initialAboutFormData = {
@@ -43,6 +49,11 @@ const initialProjectFormData = {
     github: ''
 }
 
+const initialLoginFormData = {
+    username: '',
+    password: '',
+}
+
 const AdminView = () => {
 
     const [currentSelectedTab, setCurrentSelectedTab] = useState('home')
@@ -55,6 +66,8 @@ const AdminView = () => {
     const [allData, setAllData] = useState({})
     const [update, setUpdate] = useState(false)
     const [authUser, setAuthUser] = useState(false)
+    const [loginFormData, setLoginFormData] = useState(initialLoginFormData)
+    const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
     const menuItems = [
         {
@@ -85,7 +98,7 @@ const AdminView = () => {
         {
             id: 'contact',
             label: 'Contact',
-            commponent: <AdminContactView />
+            commponent: <AdminContactView data={allData && allData?.contact} />
         }
     ]
 
@@ -139,19 +152,84 @@ const AdminView = () => {
         setProjectViewFormData(initialProjectFormData)
     }
 
+    useEffect(() => {
+        setAuthUser(JSON.parse(sessionStorage.getItem('authUser')))
+    }, [])
+
+    async function handleLogin() {
+        const res = await login(loginFormData)
+
+        console.log(res, 'login')
+
+        if (res?.success) {
+            setAuthUser(true)
+            sessionStorage.setItem('authUser', JSON.stringify(true))
+        }
+    }
+
+    function handleLogout() {
+        const confirmLogout = window.confirm('Are you sure you want to logout?');
+        if (confirmLogout) {
+            setAuthUser(false);
+            sessionStorage.removeItem('authUser');
+        }
+    }
+
+    if (!authUser) return <Login formData={loginFormData} handleLogin={handleLogin} setFormData={setLoginFormData} />
+
     return (
         <>
             <div className='border-b border-gray-200'>
-                <nav className='mb-0.5 flex justify-center space-x-6' role='tablist'>
-                    {
-                        menuItems.map(item => (
-                            <button key={item.id} type='button' onClick={() => { setCurrentSelectedTab(item.id); resetFormDatas() }} className='p-4 font-bold text-xl text-black'>
-                                {item.label}
+                <nav className='flex flex-wrap items-center md:justify-center lg:row-start-1 p-4 bg-gray-100'>
+                    <div className='flex items-center'>
+                        <button className='text-xl font-bold text-black md:hidden' onClick={() => setIsNavbarOpen(!isNavbarOpen)}>
+                            ☰
+                        </button>
+                        <div className='sm:hidden md:mb-0.5 md:flex md:justify-center md:space-x-6' role='tablist'>
+                            {
+                                menuItems.map((item, index) => (
+                                    <button
+                                        key={`${index}-${item.id}`}
+                                        type='button'
+                                        onClick={() => { setCurrentSelectedTab(item.id); resetFormDatas(); setUpdate(false) }}
+                                        className='p-4 font-bold text-xl text-black hover:text-red-500'
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))
+                            }
+                            <button
+                                onClick={handleLogout}
+                                className='p-4 font-bold text-xl text-black hover:text-red-main'
+                            >
+                                Logout
                             </button>
-                        ))
-                    }
+                        </div>
+                    </div>
+                    <div className={`fixed inset-0 bg-gray-900 bg-opacity-75 z-40 transition-opacity duration-300 ${isNavbarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} md:hidden`}>
+                        <div className='fixed inset-0 bg-red-500 flex justify-center items-center flex-col space-y-4'>
+                            <button className='text-4xl font-bold text-white absolute top-[20px] left-[30px]' onClick={() => setIsNavbarOpen(false)}>X</button>
+                            {
+                                menuItems.map((item, index) => (
+                                    <button
+                                        key={`${item.id}-${index}`}
+                                        type='button'
+                                        onClick={() => { setCurrentSelectedTab(item.id); setIsNavbarOpen(false); resetFormDatas(); setUpdate(false) }}
+                                        className='block w-full p-4 font-bold text-3xl text-white'
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))
+                            }
+                            <button
+                                onClick={() => { setAuthUser(false); sessionStorage.removeItem('authUser'); setIsNavbarOpen(false); }}
+                                className='block w-full p-4 font-bold text-3xl text-white'
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
                 </nav>
-
             </div>
             <div className='mt-10 p-10'>
                 {

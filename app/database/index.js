@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+require('dotenv').config();
+const URI = process.env.MONGODB_URI;
 
-export default async function connectToDB(params) {
+export default async function connectToDB() {
     try{
-        await mongoose.connect('mongodb+srv://anujverma3553:Anuj3553@cluster0.ihnhz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+        await mongoose.connect(URI)
         console.log("Database connected successfully")
     }
     catch(e){

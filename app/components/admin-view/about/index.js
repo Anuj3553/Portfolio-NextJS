@@ -40,7 +40,9 @@ export default function AdminAboutView({ formData, setFormData, handleSaveData }
         <div className="w-full">
             <div className="bg-[#ffff] shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <FormControls controls={controls} formData={formData} setFormData={setFormData} />
-                <button onClick={() => handleSaveData('about')} className="border border-green-600 p-4 mt-[10px] font-bold text-[16px]">Add Info</button>
+                <div className="md:block sm:flex justify-center items-center">
+                    <button onClick={() => handleSaveData('about')} className="border border-red-500 p-4 mt-[10px] font-bold text-[16px]">Add Info</button>
+                </div>
             </div>
         </div>
     )

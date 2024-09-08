@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
-const HomeSchema = new mongoose.Schema({
-    heading: String,
-    summary: String,
+const ContactSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    message: String,
 }, { timestamps: true })
 
-const Home = mongoose.models.Home || mongoose.model('Home', HomeSchema)
+const Contact = mongoose.models.Contact || mongoose.model('Contact', ContactSchema)
 
-export default Home;
+export default Contact;

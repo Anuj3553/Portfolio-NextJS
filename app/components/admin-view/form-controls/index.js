@@ -1,7 +1,7 @@
 "use client"
 
 export default function FormControls({ controls, formData, setFormData }) {
-    return controls.map(controlItem => <div key={controlItem.id} className="mb-4">
+    return controls.map((controlItem, index) => <div key={`${index}-${controlItem.id}`} className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">{controlItem.label}</label>
         <input placeholder={controlItem.placeholder} type={controlItem.type} name={controlItem.name} id={controlItem.name} value={formData[controlItem.name]} onChange={(e) => {
             setFormData({
